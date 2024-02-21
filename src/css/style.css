@@ -2,6 +2,7 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 50px;
 }
 
 .forecast {
@@ -14,4 +15,32 @@ main {
     display: grid;
     grid-template-columns: repeat(3, 100px);
     gap: 10px;
+}
+
+input:focus {
+    outline: none;
+}
+
+form {
+    display: flex;
+    align-items: flex-start;
+}
+
+#inputContainer {
+    margin: 0 5px 5px 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    display: none;
+    color: white;
+    background-color: red;
+    border-radius: 0 0 5px 5px;
+    padding: 3px;
+    text-align: center;
+}
+
+.active {
+    display: block;
 }

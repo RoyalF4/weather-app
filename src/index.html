@@ -7,9 +7,12 @@
 </head>
 <body>
     <main>
-        <form>
+        <form novalidate>
             <label for="location">🌎City:</label>
-            <input type="text" id="location" name="location">
+            <div id="inputContainer">
+                <input type="text" id="location" name="location" pattern="[a-zA-Z]*" required>
+                <span class="error" aria-live="polite"></span>
+            </div>
             <button type="submit">Submit</button>
         </form>
         <h2 id="locationHeading"></h2>
