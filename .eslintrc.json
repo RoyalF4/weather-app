@@ -11,5 +11,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "rules": {}
+  "rules": {
+    "import/extensions": [1, "always"]
+  }
 }

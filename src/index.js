@@ -1,5 +1,7 @@
 import './css/reset.css';
 import './css/style.css';
+import getDate from './date.js';
+import getTemp from './temp.js';
 
 const FORECAST_LENGTH = 3;
 const API_KEY = '245f101ed3434e6f98903140242102';
@@ -9,6 +11,13 @@ const form = document.querySelector('form');
 const locationInput = document.querySelector('#location');
 const inputError = document.querySelector('span.error');
 const locationHeading = document.querySelector('#locationHeading');
+const radioInputs = document.querySelectorAll(`input[type='radio']`);
+
+radioInputs.forEach((input) =>
+  input.addEventListener('change', () => {
+    console.log('change');
+  }),
+);
 
 function showError() {
   if (locationInput.validity.valueMissing) {
@@ -30,11 +39,16 @@ locationInput.addEventListener('input', () => {
   }
 });
 
-function createForecastContent(forecast) {
+function createForecastContent(forecast, unit) {
   forecast.forEach((day) => {
     const div = document.createElement('div');
+    const icon = document.createElement('img');
+    icon.classList.add('weatherIcon');
+    icon.src = day.day.condition.icon;
     div.classList.add('forecast');
-    div.textContent = day.day.condition.text;
+    div.appendChild(icon);
+    div.appendChild(getDate(day.date));
+    div.appendChild(getTemp(day, unit));
     container.appendChild(div);
   });
 }
@@ -47,7 +61,7 @@ function setLocationText(location) {
   }
 }
 
-async function getForecast(location) {
+async function getForecast(location, unit) {
   try {
     const response = await fetch(
       `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=${FORECAST_LENGTH}&aqi=no&alerts=no`,
@@ -60,19 +74,11 @@ async function getForecast(location) {
     const locationData = data.location;
     const forecastData = data.forecast.forecastday;
     setLocationText(locationData);
-    createForecastContent(forecastData);
+    createForecastContent(forecastData, unit);
   } catch (error) {
     setLocationText();
   }
 }
-
-// form.addEventListener('submit', (event) => {
-//   event.preventDefault();
-//   const formData = new FormData(form);
-//   const data = Object.fromEntries(formData);
-//   container.textContent = '';
-//   getForecast(data.location);
-// });
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -82,6 +88,6 @@ form.addEventListener('submit', (event) => {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
     container.textContent = '';
-    getForecast(data.location);
+    getForecast(data.location, data.unit);
   }
 });

@@ -12,6 +12,16 @@
             <div id="inputContainer">
                 <input type="text" id="location" name="location" pattern="[a-zA-Z]*" required>
                 <span class="error" aria-live="polite"></span>
+                <fieldset>
+                    <div>
+                        <input type="radio" name="unit" value="fahrenheit" id="fahrenheit" checked>
+                        <label for="fahrenheit">Fahrenheit</label>
+                    </div>
+                    <div>
+                        <input type="radio" name="unit" value="celsius" id="celsius">
+                        <label for="celsius">Celsius</label>
+                    </div>
+                </fieldset>
             </div>
             <button type="submit">Submit</button>
         </form>
