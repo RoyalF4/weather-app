@@ -1,0 +1,3 @@
+'npm start' - starts webpack live server
+'npm run build' - production build
+'npx prettier . --write' format files with prettier
