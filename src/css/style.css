@@ -1,0 +1,17 @@
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.forecast {
+    width: 100px;
+    height: 100px;
+    background-color: grey;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    gap: 10px;
+}
