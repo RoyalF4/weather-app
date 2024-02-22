@@ -11,13 +11,14 @@ const form = document.querySelector('form');
 const locationInput = document.querySelector('#location');
 const inputError = document.querySelector('span.error');
 const locationHeading = document.querySelector('#locationHeading');
-const radioInputs = document.querySelectorAll(`input[type='radio']`);
+const spinner = document.querySelector('.spinner');
+// const radioInputs = document.querySelectorAll(`input[type='radio']`);
 
-radioInputs.forEach((input) =>
-  input.addEventListener('change', () => {
-    console.log('change');
-  }),
-);
+// radioInputs.forEach((input) =>
+//   input.addEventListener('change', () => {
+//     console.log('change');
+//   }),
+// );
 
 function showError() {
   if (locationInput.validity.valueMissing) {
@@ -39,6 +40,29 @@ locationInput.addEventListener('input', () => {
   }
 });
 
+function getCondition(data) {
+  const div = document.createElement('div');
+  div.textContent = data.day.condition.text;
+  div.classList.add('condition');
+  return div;
+}
+
+function getPrecipitation(data) {
+  const chanceOfRain = data.day.daily_chance_of_rain;
+  const chanceOfSnow = data.day.daily_chance_of_snow;
+  const precipitationContainer = document.createElement('div');
+  precipitationContainer.classList.add('precipitationContainer');
+  const rainPercent = document.createElement('div');
+  rainPercent.textContent = `💧 ${chanceOfRain}%`;
+  precipitationContainer.appendChild(rainPercent);
+  if (chanceOfSnow !== 0) {
+    const snowPercent = document.createElement('div');
+    snowPercent.textContent = `❄️ ${chanceOfSnow}%`;
+    precipitationContainer.appendChild(snowPercent);
+  }
+  return precipitationContainer;
+}
+
 function createForecastContent(forecast, unit) {
   forecast.forEach((day) => {
     const div = document.createElement('div');
@@ -47,8 +71,10 @@ function createForecastContent(forecast, unit) {
     icon.src = day.day.condition.icon;
     div.classList.add('forecast');
     div.appendChild(icon);
-    div.appendChild(getDate(day.date));
+    div.appendChild(getCondition(day));
+    div.appendChild(getPrecipitation(day));
     div.appendChild(getTemp(day, unit));
+    div.appendChild(getDate(day.date));
     container.appendChild(div);
   });
 }
@@ -70,12 +96,14 @@ async function getForecast(location, unit) {
       showError();
       throw new Error('Bad Request!');
     }
+    spinner.classList.toggle('hidden');
     const data = await response.json();
     const locationData = data.location;
     const forecastData = data.forecast.forecastday;
     setLocationText(locationData);
     createForecastContent(forecastData, unit);
   } catch (error) {
+    spinner.classList.toggle('hidden');
     setLocationText();
   }
 }
@@ -85,6 +113,7 @@ form.addEventListener('submit', (event) => {
   if (!locationInput.validity.valid) {
     showError();
   } else {
+    spinner.classList.toggle('hidden');
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
     container.textContent = '';

@@ -1,8 +1,18 @@
+body {
+    background: linear-gradient(#005986, 90%, white);
+    height: 100vh;
+}
+
 main {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 50px;
+}
+
+main,
+button {
+    font-family: 'Roboto';
 }
 
 .forecast {
@@ -15,6 +25,32 @@ main {
     flex-direction: column;
     justify-content: start;
     align-items: center;
+}
+
+.condition {
+    font-size: .75rem;
+    padding: 5px;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 3rem;
+    color: white;
+}
+
+.date {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0 0 0;
+}
+
+.precipitationContainer {
+    padding: 5px;
+    margin: 10px 0 10px 0;
+}
+
+.temperature {
+    padding: 5px;
 }
 
 .weatherIcon {
@@ -35,6 +71,7 @@ input:focus {
 form {
     display: flex;
     align-items: flex-start;
+    color: white;
 }
 
 #inputContainer {
@@ -58,4 +95,46 @@ form {
 
 fieldset {
     display: flex;
+}
+
+@keyframes content {
+    from {
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.forecast {
+    animation: content 1s cubic-bezier(0.42, 0, 0.75, 1.2) forwards;
+}
+
+.spinner {
+    height: 100px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 10px solid transparent;
+    border-top-color: black;
+    border-left-color: rgba(0, 0, 0, 0.66);
+    border-bottom-color: rgba(0, 0, 0, 0.33);
+    border-radius: 50%;
+    animation: rotate 300ms infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.hidden {
+    display: none;
 }
