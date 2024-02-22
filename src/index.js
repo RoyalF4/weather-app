@@ -12,13 +12,6 @@ const locationInput = document.querySelector('#location');
 const inputError = document.querySelector('span.error');
 const locationHeading = document.querySelector('#locationHeading');
 const spinner = document.querySelector('.spinner');
-// const radioInputs = document.querySelectorAll(`input[type='radio']`);
-
-// radioInputs.forEach((input) =>
-//   input.addEventListener('change', () => {
-//     console.log('change');
-//   }),
-// );
 
 function showError() {
   if (locationInput.validity.valueMissing) {

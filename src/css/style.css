@@ -47,6 +47,11 @@ h2 {
 .precipitationContainer {
     padding: 5px;
     margin: 10px 0 10px 0;
+    display: flex;
+}
+
+.precipitationContainer > div {
+    margin-right: 5px;
 }
 
 .temperature {
