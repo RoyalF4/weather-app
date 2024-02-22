@@ -84,6 +84,7 @@ async function getForecast(location, unit) {
   try {
     const response = await fetch(
       `http://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&days=${FORECAST_LENGTH}&aqi=no&alerts=no`,
+      { mode: 'cors' },
     );
     if (response.status === 400) {
       showError();
